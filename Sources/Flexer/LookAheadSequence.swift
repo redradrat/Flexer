@@ -11,7 +11,7 @@ import Foundation
 public struct LookAheadSequence<Base>: Sequence, LookAheadIteratorProtocol where Base: Sequence {
     public typealias Element = Base.Element
 
-    public internal(set) let baseSequence: Base
+    public let baseSequence: Base
     private var buffer: [Base.Element]
     private var iterator: Base.Iterator
 
