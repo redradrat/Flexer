@@ -1,5 +1,5 @@
 //
-//  BufferingSequence.swift
+//  LookAheadSequence.swift
 //  Flexer
 //
 //  Created by Matt Massicotte on 2020-04-24.
@@ -8,17 +8,17 @@
 
 import Foundation
 
-public struct LookAheadSequence<Base>: Sequence, LookAheadIteratorProtocol where Base : Sequence {
+public struct LookAheadSequence<Base>: Sequence, LookAheadIteratorProtocol where Base: Sequence {
     public typealias Element = Base.Element
 
-    let baseSequence: Base
+    public internal(set) let baseSequence: Base
     private var buffer: [Base.Element]
     private var iterator: Base.Iterator
 
     public init(_ baseSequence: Base) {
         self.baseSequence = baseSequence
-        self.iterator = baseSequence.makeIterator()
-        self.buffer = []
+        iterator = baseSequence.makeIterator()
+        buffer = []
     }
 
     public mutating func next() -> Element? {
@@ -39,7 +39,7 @@ public struct LookAheadSequence<Base>: Sequence, LookAheadIteratorProtocol where
 
         // fill buffer as needed
         if delta > 0 {
-            for _ in 0..<delta {
+            for _ in 0 ..< delta {
                 if let t = iterator.next() {
                     buffer.append(t)
                 }
